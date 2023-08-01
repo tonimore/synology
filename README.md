@@ -1,1 +1,1 @@
-# Набр скриптов для Synology
+# Synology useful scripts
