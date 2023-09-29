@@ -44,7 +44,7 @@ fi
 # ===============================================================================
 
 echo $$>$pid
-echo "$descr started. PID: $$. Monitoring $monitor_ip..." | tee -a $log
+echo "$(date) $descr started. PID: $$. Monitoring $monitor_ip..." | tee -a $log
 
 recovery() {
     echo "Stopping VPN..." | tee -a $log
