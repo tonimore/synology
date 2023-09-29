@@ -1,7 +1,7 @@
 #!/bin/sh
 # init.d service to reconnect OpenVPN in case ping loss
 # checked on DSM 6.x
-
+# place this file to: /usr/local/etc/rc.d/S20_openvpn_reconnect.sh
 
 # type your IP here
 monitor_ip=192.168.220.1
@@ -16,20 +16,20 @@ pid=/var/run/$name.pid
 
 if [ "$1" == "debug" ]; then
     echo "$descr started in foreground. Log: $log, PID: $pid. Monitoring $monitor_ip..."
-    $0 service 
+    $0 service
     exit
 fi
 
 if [ "$1" == "start" ]; then
     echo "$descr started. Log: $log, PID: $pid. Monitoring $monitor_ip..."
-    $0 service >/dev/null 2>&1 & 
+    $0 service >/dev/null 2>&1 &
     exit
 fi
 
 if [ "$1" == "stop" ]; then
     kill $(cat $pid)
-	code=$?
-	rm $pid
+    code=$?
+    rm $pid
     exit $code
 fi
 
@@ -37,6 +37,7 @@ if [ ! "$1" == "service" ]; then
     echo "Usage: $0 start|stop|debug"
     exit 1
 fi
+
 
 # ===============================================================================
 # service part of the script:
