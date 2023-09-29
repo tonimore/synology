@@ -6,11 +6,11 @@
 # type your IP here
 monitor_ip=192.168.220.1
 
+name=$(basename $0)
 interval=120              # Interval between ping
 log=/var/log/$name.log    # Log file 
-
-name=$(basename $0)
-descr="OpenVPN auto-reconnection service"
+version=1.1
+descr="OpenVPN auto-reconnection service v$version"
 pid=/var/run/$name.pid
 
 
@@ -44,12 +44,17 @@ fi
 # ===============================================================================
 
 echo $$>$pid
+echo "$descr started. PID: $$. Monitoring $monitor_ip..." | tee -a $log
 
 recovery() {
+    echo "Stopping VPN..." | tee -a $log
     /usr/syno/etc/synovpnclient/scripts/synovpnclient.sh stop  2>&1 | tee -a $log
+    echo "VPN Stop Done" | tee -a $log
     # just in case
     sleep 5
+    echo "Starting VPN..." | tee -a $log
     /usr/syno/etc/synovpnclient/scripts/synovpnclient.sh start 2>&1 | tee -a $log
+    echo "VPN Start Done" | tee -a $log
 }
 
 
